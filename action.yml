@@ -1,5 +1,5 @@
 name: Docker Image
-description: Build and push Docker images to GitHub Container registry
+description: Build and push Docker images to GitHub Container registry easly
 inputs:
   git_token:
     description: "Git token"
@@ -16,6 +16,7 @@ inputs:
   docker_context_path:
     description: "Docker context path"
     required: true
+
 
 outputs:
   tags:
