@@ -7,10 +7,11 @@ on:
     types: [closed]
     branches:
       - main
-    
+    paths:
+      - 'devOps/actions/docker-trigger/**'
 env:
   RELEASE_NAME: docker-trigger
-  GH_TOKEN: ${{ github.token }}
+  GIT_TOKEN: ${{ github.token }}
 jobs:
   release-version:
     name: Release Version
@@ -24,13 +25,13 @@ jobs:
       - uses: actions/checkout@v4.1.7
       - name: setup node
         id: release_trigger
-        uses: mitch1009/release-trigger@v1.0.3
+        uses: mitch1009/release-trigger@v1.0.2
         with:
-          git_user_email: ${{secrets.GIT_USER_EMAIL}} 
-          git_username: ${{secrets.GIT_USERNAME }}   
-          gpg_private_key: ${{secrets.GPG_PRIVATE_KEY}}  
-          gpg_passphrase: ${{secrets.GLOBAL_GPG_PASSPHRASE}}
-          git_token: ${{secrets.GIT_TOKEN}}
+          git_user_email: ${{env.GIT_USER_EMAIL}} 
+          git_username: ${{env.GIT_USERNAME }}   
+          gpg_private_key: ${{env.GLOBAL_GPG_SECRET}}  
+          gpg_passphrase: ${{env.GLOBAL_GPG_PASSPHRASE}}
+          git_token: ${{env.GIT_TOKEN}}
           bump_script: "release"
           release_branch: "main"
           version_file_path: "package.json"
@@ -48,11 +49,9 @@ jobs:
         uses: actions/checkout@v4.1.7
         with:
           fetch-depth: 0  # Fetch all history for all tags and branches
-
-    
       
       - name: Create Release
-        
+      
         run: |
           gh release create v${{ needs.release-version.outputs.release_version }} \
             --title "v${{ needs.release-version.outputs.release_version }}" \
