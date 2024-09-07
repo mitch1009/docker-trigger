@@ -55,7 +55,7 @@ jobs:
             - name: Build and Push Docker Image
               uses: mitch1009/docker-trigger@main
               with:
-                git_token: ${{ secrets.GIT_TOKEN }}
+                git_token: ${{ secrets.GITHUB_TOKEN }}
                 release_name: 'your-release-name'
                 release_version: 'your.version.here'
                 docker_image_vendor: 'your-org-name'
