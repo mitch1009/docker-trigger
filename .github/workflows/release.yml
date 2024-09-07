@@ -1,0 +1,15 @@
+name: Docker trigger
+on:
+    push:
+        tags:
+          - 'doker-trigger@*.*.*'
+          - 'v*.*.*'
+jobs:
+  build-docker-image:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.7
+      - name: Build and Push Docker Image
+        run: |
+            echo "standing by mode"
