@@ -17,6 +17,7 @@ inputs:
     description: "Docker context path"
     required: true
 
+
 outputs:
   tags:
     description: "Docker image tags"
