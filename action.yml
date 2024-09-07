@@ -50,6 +50,7 @@ runs:
           ghcr.io/${{github.repository}}/${{inputs.release_name}}
         tags: |
           type=raw,value=${{ inputs.release_version }}
+          type=raw,value=latest
         labels: |
           maintainer=Korena
           org.opencontainers.image.vendor=${{ inputs.docker_image_vendor }}
