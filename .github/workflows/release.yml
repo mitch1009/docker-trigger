@@ -1,15 +1,73 @@
 name: Docker trigger
 on:
-    push:
-        tags:
-          - 'doker-trigger@*.*.*'
-          - 'v*.*.*'
+  push:
+    tags:
+      - 'docker-trigger@*.*.*'
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+    paths:
+      - 'devOps/actions/docker-trigger/**'
+env:
+  RELEASE_NAME: docker-trigger
 jobs:
-  build-docker-image:
-    name: Build Docker Image
+  release-version:
+    name: Release Version
     runs-on: ubuntu-latest
+    environment: release
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged==true
+    outputs:
+      release_version: ${{ steps.release_trigger.outputs.release_version }}
+      pr_log: ${{ steps.release_trigger.outputs.pr_log }}
     steps:
       - uses: actions/checkout@v4.1.7
-      - name: Build and Push Docker Image
+      - name: setup node
+        id: release_trigger
+        uses: mitch1009/release-trigger@v1.0.2
+        with:
+          git_user_email: ${{env.GIT_USER_EMAIL}} 
+          git_username: ${{env.GIT_USERNAME }}   
+          gpg_private_key: ${{env.GLOBAL_GPG_SECRET}}  
+          gpg_passphrase: ${{env.GLOBAL_GPG_PASSPHRASE}}
+          git_token: ${{env.GIT_TOKEN}}
+          bump_script: "release"
+          release_branch: "main"
+          version_file_path: "package.json"
+  create-release:     
+    name: Create New Release 🎉
+    runs-on: ubuntu-latest
+    needs: [release-version]
+    permissions:
+      contents: write
+      id-token: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.7
+        with:
+          fetch-depth: 0  # Fetch all history for all tags and branches
+
+      - name: Get contributors
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
-            echo "standing by mode"
+          CONTRIBUTORS=$(gh api repos/${{ github.repository }}/contributors --jq 'map(.login) | join(", @")')
+          echo "CONTRIBUTORS=@$CONTRIBUTORS" >> $GITHUB_ENV
+      
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+        run: |
+          gh release create v${{ needs.release-version.outputs.release_version }} \
+            --title "v${{ needs.release-version.outputs.release_version }}" \
+            --notes "## 🎍 What's new in this release:
+
+            ${{ needs.release-version.outputs.pr_log }}
+            
+            ## 🙏🏾 Thank You:
+            A big thank you to all our amazing engineers and maintainers
+            "
+           
+    

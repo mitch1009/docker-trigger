@@ -1,10 +1,10 @@
 {
-  "name": "docker-trigger",
-  "version": "0.0.0",
+  "name": "@mitch1009/docker-trigger",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "release": "standard-version --sign --release-as patch"
+    "release": "standard-version --sign --release-as patch --tag-prefix 'docker-trigger@' "
   },
   "keywords": [],
   "author": "",
