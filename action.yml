@@ -24,6 +24,9 @@ outputs:
   labels:
     description: "Docker image labels"
     value: ${{ steps.meta.outputs.labels }}
+  release_sha:
+    description: "Release SHA"
+    value: ${{ steps.extract_sha.outputs.sha }}
 
 runs:
   using: "composite"
@@ -51,8 +54,9 @@ runs:
         tags: |
           type=raw,value=${{ inputs.release_version }}
           type=raw,value=latest
+          type=raw,value=${{ steps.extract_sha.outputs.sha }}
         labels: |
-          maintainer=Korena
+          maintainer=${{ inputs.docker_image_vendor }}
           org.opencontainers.image.vendor=${{ inputs.docker_image_vendor }}
           org.opencontainers.image.title=${{ inputs.release_name }}
           org.opencontainers.image.version=${{ inputs.release_version }}
@@ -63,7 +67,8 @@ runs:
 
     - name: Check current folder directory
       shell: bash
-      run: ls -a
+      id: extract_sha
+      run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
     - name: Build and push Docker image
       id: build-and-push
