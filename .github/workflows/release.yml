@@ -10,7 +10,7 @@ on:
     
 env:
   RELEASE_NAME: docker-trigger
-  GH_TOKEN: ${{ secrets.GIT_TOKEN }}
+  GH_TOKEN: ${{ github.token }}
 jobs:
   release-version:
     name: Release Version
@@ -52,8 +52,7 @@ jobs:
     
       
       - name: Create Release
-        env:
-          GH_TOKEN: ${{ env.GIT_TOKEN }}
+        
         run: |
           gh release create v${{ needs.release-version.outputs.release_version }} \
             --title "v${{ needs.release-version.outputs.release_version }}" \
