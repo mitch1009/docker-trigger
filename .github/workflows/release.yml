@@ -7,8 +7,7 @@ on:
     types: [closed]
     branches:
       - main
-    paths:
-      - 'devOps/actions/docker-trigger/**'
+    
 env:
   RELEASE_NAME: docker-trigger
 jobs:
