@@ -10,6 +10,7 @@ on:
     
 env:
   RELEASE_NAME: docker-trigger
+  GH_TOKEN: ${{ secrets.GIT_TOKEN }}
 jobs:
   release-version:
     name: Release Version
