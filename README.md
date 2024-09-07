@@ -41,7 +41,7 @@ To use this action in your workflow, include the following snippet in your `.git
 ## Example workflow
 
 ```yaml
-name: example doker build
+name: example docker build
 on:
     push:
       branches:
