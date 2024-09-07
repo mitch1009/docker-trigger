@@ -27,7 +27,7 @@ jobs:
         with:
           git_user_email: ${{env.GIT_USER_EMAIL}} 
           git_username: ${{env.GIT_USERNAME }}   
-          gpg_private_key: ${{env.GLOBAL_GPG_SECRET}}  
+          gpg_private_key: ${{env.GPG_PRIVATE_KEY}}  
           gpg_passphrase: ${{env.GLOBAL_GPG_PASSPHRASE}}
           git_token: ${{env.GIT_TOKEN}}
           bump_script: "release"
