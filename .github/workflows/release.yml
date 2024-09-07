@@ -49,12 +49,7 @@ jobs:
         with:
           fetch-depth: 0  # Fetch all history for all tags and branches
 
-      - name: Get contributors
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          CONTRIBUTORS=$(gh api repos/${{ github.repository }}/contributors --jq 'map(.login) | join(", @")')
-          echo "CONTRIBUTORS=@$CONTRIBUTORS" >> $GITHUB_ENV
+    
       
       - name: Create Release
         env:
