@@ -53,7 +53,7 @@ jobs:
       
       - name: Create Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GH_TOKEN: ${{ env.GIT_TOKEN }}
         run: |
           gh release create v${{ needs.release-version.outputs.release_version }} \
             --title "v${{ needs.release-version.outputs.release_version }}" \
