@@ -25,11 +25,11 @@ jobs:
         id: release_trigger
         uses: mitch1009/release-trigger@v1.0.2
         with:
-          git_user_email: ${{env.GIT_USER_EMAIL}} 
-          git_username: ${{env.GIT_USERNAME }}   
-          gpg_private_key: ${{env.GPG_PRIVATE_KEY}}  
-          gpg_passphrase: ${{env.GLOBAL_GPG_PASSPHRASE}}
-          git_token: ${{env.GIT_TOKEN}}
+          git_user_email: ${{secrets.GIT_USER_EMAIL}} 
+          git_username: ${{secrets.GIT_USERNAME }}   
+          gpg_private_key: ${{secrets.GPG_PRIVATE_KEY}}  
+          gpg_passphrase: ${{secrets.GLOBAL_GPG_PASSPHRASE}}
+          git_token: ${{secrets.GIT_TOKEN}}
           bump_script: "release"
           release_branch: "main"
           version_file_path: "package.json"
