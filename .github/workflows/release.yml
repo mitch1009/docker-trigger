@@ -52,6 +52,7 @@ jobs:
       - name: Get contributors
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GH_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
           CONTRIBUTORS=$(gh api repos/${{ github.repository }}/contributors --jq 'map(.login) | join(", @")')
           echo "CONTRIBUTORS=@$CONTRIBUTORS" >> $GITHUB_ENV
