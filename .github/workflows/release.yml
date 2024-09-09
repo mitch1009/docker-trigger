@@ -4,6 +4,7 @@ on:
         tags:
           - 'v*.*.*'
 jobs:
+
   create-new-release:
     name: Create New Release 🎉
     runs-on: ubuntu-latest
