@@ -16,7 +16,14 @@ inputs:
   docker_context_path:
     description: "Docker context path"
     required: true
-
+  release_sha:
+    description: "Release SHA"
+    required: false
+    default: $(git rev-parse --short HEAD)
+  release_description:
+    description: "Release description"
+    required: false
+    default: ${{ inputs.release_name }}
 
 outputs:
   tags:
@@ -56,12 +63,16 @@ runs:
           type=raw,value=${{ inputs.release_version }}
           type=raw,value=latest
           type=raw,value=${{ steps.extract_sha.outputs.sha }}
+          type=raw,value=${{ inputs.release_sha }}-mod
+          type=raw,value=$(git rev-parse --short HEAD)-latest
         labels: |
           maintainer=${{ inputs.docker_image_vendor }}
           org.opencontainers.image.vendor=${{ inputs.docker_image_vendor }}
           org.opencontainers.image.title=${{ inputs.release_name }}
           org.opencontainers.image.version=${{ inputs.release_version }}
-          org.opencontainers.image.description=${{ inputs.release_name }}
+          org.opencontainers.image.description=${{ inputs.release_description }}
+          org.opencontainers.image.revision=${{ inputs.release_sha }}
+          org.opencontainers.image.created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3.6.1
