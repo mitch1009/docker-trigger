@@ -95,4 +95,5 @@ runs:
 
     - name: Image digest
       shell: bash
+      id: digest
       run: echo ${{ steps.build-and-push.outputs.digest }}
