@@ -1,7 +1,7 @@
 {
   "name": "@mitch1009/docker-trigger",
   "version": "1.0.9",
-  "description": "docker trigger action ",
+  "description": "docker trigger action",
   "main": "index.js",
   "scripts": {
     "rel": "standard-version --sign --release-as patch --tag-prefix 'docker-trigger@'",
