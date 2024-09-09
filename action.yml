@@ -1,4 +1,4 @@
-name: Docker Image
+name: Docker Image Trigger
 description: Build and push Docker images to GitHub Container registry easly
 inputs:
   git_token:
