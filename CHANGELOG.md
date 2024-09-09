@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.10](https://github.com/mitch1009/docker-trigger/compare/v1.0.6...v1.0.10) (2024-09-09)
+
 ### 1.0.1 (2024-09-07)
 
 
