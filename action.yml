@@ -23,7 +23,7 @@ inputs:
   release_description:
     description: "Release description"
     required: false
-    default: ${{ inputs.release_name }}
+    default: '[$(git rev-parse --short HEAD)] New Docker Image Release $(jq -r ".version" package.json ) '
 
 outputs:
   tags:
