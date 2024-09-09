@@ -27,18 +27,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
-          PREVIOUS_TAG=$(git describe --tags --always --abbrev=0 HEAD^)
-          PR_LOG=$(gh pr list --search "is:merged merged:>$(git log -1 --format=%aI $PREVIOUS_TAG)" --json title,author --jq '.[] | " \n - [x] " + .title + " by @" + .author.login' | tr '\n' ', ')
-          echo "PR_LOG<<EOF" >>   $GITHUB_ENV
-          echo "$PR_LOG" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-          echo "pr-log=$PR_LOG" >> $GITHUB_OUTPUT
-
-          # extract all commit logs from the last tag
-          git log --pretty=format:"%s" $PREVIOUS_TAG..HEAD
-          # format the commit logs
-          git log --pretty=format:"%s" $PREVIOUS_TAG..HEAD | sed 's/^/- /g'
-          echo "commit_log"=$(git log --pretty=format:"%s" $PREVIOUS_TAG..HEAD | sed 's/^/- /g') >> $GITHUB_OUTPUT
+         echo "pr-log=$(gh pr list --search "is:merged merged:>$(git log -1 --format=%aI $(git describe --tags --always --abbrev=0 HEAD^))" --json title,author --jq '.[] | " \n - [x] " + .title + " by @" + .author.login' | tr '\n' ', ')" >> $GITHUB_OUTPUT
           
   create-new-release:
     name: Create New Release 🎉
@@ -68,12 +57,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
-          gh release create v${{ needs.build-docker-image.outputs.release_version }} \
-            --title "v${{ needs.build-docker-image.outputs.release_version }}" \
+          gh release create v$(jq -r ".version" package.json) \
+            --title "v$(jq -r ".version" package.json)" \
             --notes "## 🎍 What's new in this release:
-
-            ${{ needs.build-docker-image.outputs.commit_log }}
             
+            - [x] New Docker Image Release $(jq -r ".version" package.json )
+
             ## 🙏🏾 Thank You:
 
             A big thank you to all our amazing engineers and maintainers
