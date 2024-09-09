@@ -1,5 +1,8 @@
 # Docker Image Trigger
 
+[![Docker trigger](https://github.com/mitch1009/docker-trigger/actions/workflows/release.yml/badge.svg)](https://github.com/mitch1009/docker-trigger/actions/workflows/release.yml) 
+
+
 ## Description
 This GitHub Action builds and pushes Docker images to a container registry - `ghcr.io` . It automates the process of creating Docker images based on specified inputs and metadata.
 
