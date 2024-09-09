@@ -3,8 +3,14 @@ on:
     push:
         tags:
           - 'v*.*.*'
+env:
+  GH_TOKEN: ${{ secrets.GIT_TOKEN }}
+  GITHUB_TOKEN: ${{ github.token }}
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
 jobs:
-
   create-new-release:
     name: Create New Release 🎉
     runs-on: ubuntu-latest
@@ -16,11 +22,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.1.7
         with:
-          fetch-depth: 0  # Fetch all history for all tags and branches
+          fetch-depth: 0
 
       - name: Create Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
           gh release create v$(jq -r ".version" package.json) \
             --title "v$(jq -r ".version" package.json)" \
