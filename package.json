@@ -1,6 +1,6 @@
 {
   "name": "@mitch1009/docker-trigger",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "docker trigger action ",
   "main": "index.js",
   "scripts": {
