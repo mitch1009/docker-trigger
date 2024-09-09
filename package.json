@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "rel": "standard-version --sign --release-as patch --tag-prefix 'docker-trigger@'",
+    "rel:v": "standard-version  --release-as patch'",
     "release": "standard-version --sign --release-as patch --tag-prefix 'docker-trigger@' "
   },
   "keywords": [],
