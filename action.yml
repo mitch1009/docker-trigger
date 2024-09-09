@@ -63,8 +63,7 @@ runs:
           type=raw,value=${{ inputs.release_version }}
           type=raw,value=latest
           type=raw,value=${{ steps.extract_sha.outputs.sha }}
-          type=raw,value=${{ inputs.release_sha }}-mod
-          type=raw,value=$(git rev-parse --short HEAD)-latest
+          type=raw,value=${{ inputs.release_sha }}
         labels: |
           maintainer=${{ inputs.docker_image_vendor }}
           org.opencontainers.image.vendor=${{ inputs.docker_image_vendor }}
