@@ -1,5 +1,6 @@
 name: Docker Image Trigger
 description: Build and push Docker images to GitHub Container registry easly
+author: "mitch1009"
 inputs:
   git_token:
     description: "Git token"
